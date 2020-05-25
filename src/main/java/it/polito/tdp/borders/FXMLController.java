@@ -5,9 +5,9 @@
 package it.polito.tdp.borders;
 
 import java.net.URL;
-import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import it.polito.tdp.borders.model.Country;
 import it.polito.tdp.borders.model.Model;
@@ -77,7 +77,7 @@ public class FXMLController {
 
 		this.txtResult.setText("Paesi raggiungibili: \n");
 
-		List<Country> vicini = this.model.getVicini(co);
+		Set<Country> vicini = this.model.getVicini(co);
 
 		if (vicini == null) {
 			this.txtResult.appendText("Nessun paese raggiungibile via terra");

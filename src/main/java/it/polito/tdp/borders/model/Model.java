@@ -1,17 +1,17 @@
 package it.polito.tdp.borders.model;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.jgrapht.Graph;
 import org.jgrapht.Graphs;
 import org.jgrapht.alg.connectivity.ConnectivityInspector;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleGraph;
-import org.jgrapht.traverse.BreadthFirstIterator;
 
 import it.polito.tdp.borders.db.BordersDAO;
 
@@ -74,14 +74,10 @@ public class Model {
 
 	}
 
-	public List<Country> getVicini(Country co) {
+	public Set<Country> getVicini(Country co) {
 
-		BreadthFirstIterator<Country, DefaultEdge> it = new BreadthFirstIterator<>(grafo);
-		List<Country> vicini = new ArrayList<>();
-
-		while (it.hasNext()) {
-			vicini.add(it.next());
-		}
+		Set<Country> vicini = new HashSet<>();
+		Ricorsione.trova(this.grafo, co, vicini);
 
 		if (vicini.size() == 0)
 			return null;
