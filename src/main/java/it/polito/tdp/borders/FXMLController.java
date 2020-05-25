@@ -1,3 +1,6 @@
+/**
+ * Sample Skeleton for 'Scene.fxml' Controller Class
+ */
 
 package it.polito.tdp.borders;
 
@@ -7,14 +10,14 @@ import java.util.ResourceBundle;
 
 import it.polito.tdp.borders.model.Country;
 import it.polito.tdp.borders.model.Model;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
 public class FXMLController {
-
-	private Model model;
 
 	@FXML // ResourceBundle that was given to the FXMLLoader
 	private ResourceBundle resources;
@@ -25,8 +28,13 @@ public class FXMLController {
 	@FXML // fx:id="txtAnno"
 	private TextField txtAnno; // Value injected by FXMLLoader
 
+	@FXML // fx:id="cmbPaesi"
+	private ComboBox<Country> cmbPaesi; // Value injected by FXMLLoader
+
 	@FXML // fx:id="txtResult"
 	private TextArea txtResult; // Value injected by FXMLLoader
+
+	private Model model;
 
 	@FXML
 	void doCalcolaConfini(ActionEvent event) {
@@ -56,14 +64,41 @@ public class FXMLController {
 
 	}
 
+	@FXML
+	void doCalcolaVicini(ActionEvent event) {
+
+		Country co = this.cmbPaesi.getValue();
+
+		if (co == null) {
+			this.txtResult.setText("Scegliere un paese");
+			return;
+		}
+
+		this.txtResult.setText("Paesi raggiungibili: \n");
+
+		List<Country> vicini = this.model.getVicini(co);
+
+		if (vicini == null) {
+			this.txtResult.appendText("Nessun paese raggiungibile via terra");
+		} else {
+			for (Country c : vicini) {
+				this.txtResult.appendText(c.toString() + "\n");
+			}
+		}
+
+	}
+
 	@FXML // This method is called by the FXMLLoader when initialization is complete
 	void initialize() {
 		assert txtAnno != null : "fx:id=\"txtAnno\" was not injected: check your FXML file 'Scene.fxml'.";
+		assert cmbPaesi != null : "fx:id=\"cmbPaesi\" was not injected: check your FXML file 'Scene.fxml'.";
 		assert txtResult != null : "fx:id=\"txtResult\" was not injected: check your FXML file 'Scene.fxml'.";
 
 	}
 
 	public void setModel(Model model) {
 		this.model = model;
+
+		this.cmbPaesi.setItems(FXCollections.observableArrayList(model.getAllCountries()));
 	}
 }
