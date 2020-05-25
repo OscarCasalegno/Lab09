@@ -5,6 +5,7 @@
 package it.polito.tdp.borders;
 
 import java.net.URL;
+import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 

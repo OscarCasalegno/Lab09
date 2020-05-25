@@ -1,5 +1,6 @@
 package it.polito.tdp.borders.model;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -60,5 +61,17 @@ public class Model {
 		}
 
 		return paesi;
+	}
+
+	public Collection<Country> getAllCountries() {
+
+		BordersDAO dao = new BordersDAO();
+		dao.loadAllCountries(this.countryIdMap);
+
+		return this.countryIdMap.values();
+
+	}
+
+	public List<Country> getVicini(Country co) {
 	}
 }
