@@ -1,5 +1,6 @@
 package it.polito.tdp.borders.model;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -10,6 +11,7 @@ import org.jgrapht.Graphs;
 import org.jgrapht.alg.connectivity.ConnectivityInspector;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleGraph;
+import org.jgrapht.traverse.BreadthFirstIterator;
 
 import it.polito.tdp.borders.db.BordersDAO;
 
@@ -73,5 +75,18 @@ public class Model {
 	}
 
 	public List<Country> getVicini(Country co) {
+
+		BreadthFirstIterator<Country, DefaultEdge> it = new BreadthFirstIterator<>(grafo);
+		List<Country> vicini = new ArrayList<>();
+
+		while (it.hasNext()) {
+			vicini.add(it.next());
+		}
+
+		if (vicini.size() == 0)
+			return null;
+
+		return vicini;
+
 	}
 }
